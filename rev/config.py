@@ -1,14 +1,24 @@
+import tomllib
 from flask import Flask
 from flask_wtf.csrf import CSRFProtect
-from peewee import SqliteDatabase, MySQLDatabase
+from peewee import MySQLDatabase
+
+
+with open("config.toml", "rb") as f:
+    config_data = tomllib.load(f)
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
-app.config['PRESERVE_CONTEXT_ON_EXCEPTION'] = False
-app.config['TEMPLATE_RELOAD'] = True
-app.config['SESSION_COOKIE_SECURE'] = False
+app.config['SECRET_KEY'] = config_data['flask']['secret_key']
+app.config['TEMPLATE_RELOAD'] = config_data['flask']['template_reload']
+app.config['SESSION_COOKIE_SECURE'] = config_data['flask']['session_cookie_secure']
+
 
 csrf = CSRFProtect(app)
-#db = SqliteDatabase('data.sqlite3')
-db = MySQLDatabase(database="hms247", user="root", password="", host="127.0.0.1", port=3306)
+db = MySQLDatabase(
+    database=config_data['database']['database'], 
+    user=config_data['database']['user'],
+    password=config_data['database']['password'], 
+    host=config_data['database']['host'], 
+    port=config_data['database']['port'],
+    )
