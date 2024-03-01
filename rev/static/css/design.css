@@ -1,0 +1,29 @@
+.d-loader{
+    display:none;
+    position:fixed;
+    width:100%; height:100%;
+    z-index:234234242;
+    top:0px; left:0px;
+    background-color:rgba(0,0,0,0.8);
+    color:#fff;
+    box-sizing:border-box;
+    padding-top:30px;
+    text-align:center;
+}
+
+.htmx-request .d-loader{
+    display:block;
+}
+.htmx-request.d-loader{
+    display:block;
+}
+
+
+/* rounded-corners */
+.rounded-10{border-radius: 10px;}
+.rounded-15{border-radius: 14px;}
+
+
+.d-user-tab-box{
+    display: none;
+}

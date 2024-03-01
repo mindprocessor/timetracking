@@ -1,0 +1,59 @@
+{% extends 'layout/main_admin.html' %}
+
+
+{% block content %}
+
+    <div class="container py-5" id="d-view">
+        
+        <div class="row">
+            <div class="col">
+                <h4>Recent TimeLogs</h4>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col">
+                <div class="table-responsive">
+                    {% if timelogs %}
+                        <table class="table table-hover">
+                            <thead>
+                                <th>EID</th>
+                                <th>User</th>
+                                <th>IN</th>
+                                <th>OUT</th>
+                                <th>Status</th>
+                                <th>Details</th>
+                            </thead>
+                            <tbody class="table-group-divider">
+                                {% for item in timelogs %}
+                                    <tr>
+                                        <td>{{item.users.eid}}</td>
+                                        <td>
+                                            <a href="{{url_for('admin.action_user', uid=item.users_id)}}" 
+                                                class="fw-bold text-decoration-none" up-follow>
+                                                {{item.users.username}}
+                                            </a>
+                                        </td>
+                                        <td>{{item.checkin}}</td>
+                                        <td>{{item.checkout}}</td>
+                                        <td>{{item.status}}</td>
+                                        <td>
+                                            <a href="{{url_for('admin.action_user_timelog_detail', id=item.id)}}" 
+                                                class="btn btn-sm btn-light border py-0 view-timelog-detail"
+                                                up-layer="new" up-size="large">
+                                                details
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p class="lead">No records found</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

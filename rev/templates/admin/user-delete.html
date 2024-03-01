@@ -1,0 +1,71 @@
+{% extends 'layout/main_admin.html' %}
+
+
+{% block content %}
+
+    <div class="container py-5">
+        
+        <div class="row">
+            <div class="col">
+                <h4>User / Delete / {{user.username}}</h4>
+            </div>
+        </div>
+      
+        <div class="row mt-3 g-3">
+            <div class="col-12">
+                <div class="border rounded p-4">
+                    <a href="{{url_for('admin.action_user', uid=user.id)}}" 
+                        class="btn btn-light border" up-follow>&leftarrow; back</a>
+
+                    <div class="p-4 rounded border mt-4">
+                        <h5>User Details</h5>
+                        <div class="row g-3 mt-2">
+                            <div class="col">
+                                <em>Username</em>
+                                <p class="lead fw-bold">{{user.username}}</p>
+                            </div>
+                            <div class="col">
+                                <em>First Name</em>
+                                <p class="lead fw-bold">{{user.first_name}}</p>
+                            </div>
+                            <div class="col">
+                                <em>Last Name</em>
+                                <p class="lead fw-bold">{{user.last_name}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-danger mt-4">
+                        Are you sure you want to <b>DELETE</b> this user along with all the <b>DATA RELATED</b> to it? <br/>
+                        Once deleted it <b>CANNOT</b> be undone.
+                    </div>
+
+
+                    <form method="post" class="mt-4" up-submit up-disable>
+                        {{form.hidden_tag()}}
+                        <div class="py-2">
+                            <p>Confirmation Code: <span class="fw-bold">{{code}}</span></p>
+                        </div>
+
+                        <div class="py-2">
+                            {{form.confirmation_code.label}}
+                            {{form.confirmation_code(class='form-control')}}
+                            <small class="text-danger">{{form.confirmation_code.errors[0]}}</small>
+                        </div>
+                        <div class="py-2">
+                            {{form.password.label}}
+                            {{form.password(class='form-control')}}
+                            <small class="text-danger">{{form.password.errors[0]}}</small>    
+                        </div>
+                        <div class="py-2 text-end">
+                            <button type="submit" class="btn btn-danger">Confirm Delete</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock content %}

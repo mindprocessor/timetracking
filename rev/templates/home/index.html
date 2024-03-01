@@ -1,0 +1,153 @@
+{% extends 'layout/main.html' %}
+
+
+{% block content %}
+
+    <div class="container py-5">
+        <div class="row">
+            <div class="col">
+                <div class="p-4 shadow-sm border rounded-10">
+                    <div class="row g-3 d-flex align-items-center">
+                        <div class="col-6">
+                            <h3>Hi {{current_user.first_name}}</h3>
+                        </div>
+                        <div class="col-6 text-end">
+                            {% if current_status == 'out' %}
+                                <a href="{{url_for('home.action_check_in')}}" class="btn btn-primary" up-follow>
+                                    Check IN
+                                </a>
+                            {% endif %}
+                            
+                            {% if current_status == 'in' %}
+                                You are <span class="text-success fw-bold">checked-IN</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if current_status == 'in' %}
+            
+            <div class="row mt-3">
+                <div class="col">
+                    <div class="p-3 border rounded-10 shadow-sm">
+                        <h6>Select breaks</h6>
+                        {% for break in break_choices %}
+                            <a href="{{url_for('home.action_break_start', mode=break)}}" class="btn btn-sm btn-outline-primary" up-follow>
+                                {{break}}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+        {% endif %}
+
+        <div class="row mt-3">
+            <div class="col">
+                <div class="">
+                    {% for item in checking %}
+                        <div class="rounded-10 shadow-sm border {{'border-primary' if item.status=='in' else ''}}">
+                            <div class="px-3 py-3">
+                                <div class="row g-3 d-flex align-items-center checkin-record">
+                                    <div class="col">
+                                        <small class="text-muted">IN</small><br/>
+                                        <p class="fw-bold" id="checkin-datetime">{{item.checkin}}</p>
+                                    </div>
+                                    <div class="col">
+                                        <small class="text-muted">OUT</small><br/>
+                                        {% if item.status == 'in' %}
+                                            <p class="fw-bold text-success">in progress</p>
+                                        {% else %}
+                                            <p class="fw-bold">{{item.checkout}}</p>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col">
+                                        {% if item.status == 'in' %}
+                                            <small class="text-muted">Time Elapsed</small><br/>
+                                            <p class="fw-bold text-primary time-elapsed">--:--</p>
+                                        {% else %}
+                                            <small class="text-muted">Hours</small><br/>
+                                            <p class="fw-bold">{{item.total_hours}}</p>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col text-end">
+                                        {% if item.status == 'out' %}
+                                            <a href="{{url_for('home.action_checking_details', id=item.id)}}" class="btn btn-light border">
+                                                Details
+                                            </a>
+                                        {% endif %}
+                                        {% if item.status == 'in' %}
+                                            <a href="{{url_for('home.action_check_out', id=item.id)}}" class="btn btn-danger">
+                                                Check-OUT
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                {% if item.breaks %}
+                                    
+                                    <div class="row pt-2 checkin-break-record">
+                                        <div class="col">
+                                            <div class="p-3 rounded-10 border bg-light">
+                                                <p>BREAKS</p>
+                                                <table class="table table-sm">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Mode</th>
+                                                            <th>Start</th>
+                                                            <th>End</th>
+                                                            <th>Hours</th>
+                                                            <th>Status</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="table-group-divider">
+                                                        {% for break in item.breaks %}
+                                                            <tr>
+                                                                <td>{{break.mode}}</td>
+                                                                <td> 
+                                                                    {% if break.status == 'start' %}
+                                                                        <span id="break-time-start">{{break.start}}</span>
+                                                                    {% else %}
+                                                                        {{break.start}}
+                                                                    {% endif %}
+                                                                </td>
+                                                                <td>
+                                                                    {% if break.status == 'start' %}
+                                                                        <span class="text-info bk-time-elapsed">in progress</span>
+                                                                    {% else %}
+                                                                         {{break.end}}
+                                                                    {% endif %}
+                                                                </td>
+                                                                <td>{{break.total_hours}}</td>
+                                                                <td>{{break.status}}</td>
+                                                                <td>
+                                                                    {% if break.status == 'start' %}
+                                                                        <a href="{{url_for('home.action_break_stop', id=break.id)}}"
+                                                                            class="btn btn-sm btn-outline-danger py-0">
+                                                                            Stop    
+                                                                        </a>
+                                                                    {% endif %}
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                    {% endfor %}
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

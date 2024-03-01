@@ -1,0 +1,21 @@
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>DateTime Added</th>
+            <th>In</th>
+            <th>Out</th>
+            <th>Total Hours</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for att in attendance %}
+            <tr>
+                <td>{{att.created_at}}</td>
+                <td>{{att.checkin}}</td>
+                <td>{{att.checkout}}</td>
+                <td>{{att.total_hours}}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

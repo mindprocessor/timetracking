@@ -1,0 +1,44 @@
+{% extends 'layout/main_admin.html' %}
+
+
+{% block content %}
+
+    <div class="container py-5" id="d-view">
+        
+        <div class="row">
+            <div class="col">
+                <h4>Support</h4>
+            </div>
+        </div>
+      
+        <div class="row mt-4">
+            <div class="col">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th width="200">Date</th>
+                            <th width="150">User</th>
+                            <th>Issue</th>
+                            <th>Help</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for rec in support %}
+                            <tr>
+                                <td>{{rec.0.report_date.strftime('%Y-%m-%d %H:%S')}}</td>
+                                <td>{{rec.1.username}}</td>
+                                <td>{{rec.0.description_issue}}</td>
+                                <td>{{rec.0.description_help}}</td>
+                                <td>
+                                    <a href="" class="btn btn-sm btn-light">view</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

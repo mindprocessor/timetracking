@@ -1,0 +1,69 @@
+{% extends 'layout/main_admin.html' %}
+
+
+{% block content %}
+
+    <div class="container py-5" id="d-view">
+        
+        <div class="row">
+            <div class="col">
+                <h4>User / Add</h4>
+            </div>
+        </div>
+      
+        <div class="row mt-4">
+            <div class="col">
+                <div class="p-4 rounded border">
+                    <a href="{{url_for('admin.action_users')}}" class="btn btn-light border" up-follow>&leftarrow; back</a>
+                    
+                    <form method="post" class="mt-4" up-submit up-disable>
+                        <h5>User Details</h5>
+                        {{form.hidden_tag()}}
+                            <div class="py-2">
+                                {{form.username.label}}
+                                {{form.username(class='form-control')}}
+                                <small class="text-danger">{{form.username.errors[0]}}</small>    
+                            </div>
+                            <div class="py-2">
+                                {{form.password.label}}
+                                {{form.password(class='form-control')}}
+                                <small class="text-danger">{{form.password.errors[0]}}</small>    
+                            </div>
+                            <div class="py-2">
+                                {{form.first_name.label}}
+                                {{form.first_name(class='form-control')}}
+                                <small class="text-danger">{{form.first_name.errors[0]}}</small>        
+                            </div>
+                            <div class="py-2">
+                                {{form.last_name.label}}
+                                {{form.last_name(class='form-control')}}
+                                <small class="text-danger">{{form.last_name.errors[0]}}</small>        
+                            </div>
+                            <div class="py-2">
+                                {{form.email.label}}
+                                {{form.email(class='form-control')}}
+                                <small class="text-danger">{{form.email.errors[0]}}</small>        
+                            </div>
+                            <div class="py-2">
+                                {{form.account.label}}
+                                {{form.account(class='form-control')}}
+                                <small class="text-danger">{{form.account.errors[0]}}</small>        
+                            </div>
+                            <div class="py-2">
+                                {{form.level.label}}
+                                {{form.level(class='form-control')}}
+                                <small class="text-danger">{{form.level.errors[0]}}</small>        
+                            </div>
+                            <div class="py-2 text-end">
+                                <button type="submit" class="btn btn-primary px-5">Save</button></td>
+                            </div>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        
+    </div>
+
+{% endblock content %}

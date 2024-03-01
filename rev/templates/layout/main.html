@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>24/7-intouch TRACKING</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='favicon.ico')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bs5/css/bootstrap.min.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='unpoly/unpoly.min.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/design.css') }}"/>
+
+    <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+    <script src="{{ url_for('static', filename='bs5/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='unpoly/unpoly.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/moment.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/base.js') }}"></script>
+
+    {% block headtags %}{% endblock %}
+</head>
+
+<body>
+    <header class="shadow-sm">
+        {% include 'blocks/header.html' %}
+    </header>
+    
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show rounded-0" role="alert">
+                        {{ message|safe }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        {% block content%}{%endblock content %}
+    </main>
+    
+    <footer>
+    
+    </footer>
+    
+    <div class="d-loader">
+        Processing please wait...
+    </div>
+    
+    <!--
+    <script type="text/javascript">
+        $('.do-loader').on('click', function(e){
+           if(window.performance.navigation){
+                $('#d-loader').show();
+           };
+        });
+    </script>
+    -->
+    
+    {% block bottomtags %}{% endblock %}
+</body>
+
+</html>

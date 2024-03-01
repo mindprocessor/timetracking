@@ -1,0 +1,87 @@
+<div id="hx-timelog">
+    <div>
+        <h6>User details</h6>
+        <table class="table table-bordered">
+            <thead>
+                <th>Employee Id</th>
+                <th>Username</th>
+                <th>Full name</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{timelog.users.eid}}</td>
+                    <td>{{timelog.users.username}}</td>
+                    <td>{{timelog.users.first_name}} {{timelog.users.last_name}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h6 class="mt-4">TimeLog</h6>
+        <table class="table table-bordered">
+            <thead>
+                <th>Check-IN</th>
+                <th>Check-OUT</th>
+                <th>Total Hours</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{timelog.checkin}}</td>
+                    <td>{{timelog.checkout}}</td>
+                    <td>{{"{:.2f}".format(timelog.total_hours) if timelog.total_hours else '0'}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h6 class="mt-4">Breaks</h6>
+        <table class="table table-bordered">
+            <thead>
+                <thead>
+                    <th>Mode/Type</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Status</th>
+                    <th>Hours</th>
+                </thead>
+            </thead>
+            <tbody>
+                {% for break in timelog.breaks %}
+                    <tr>
+                        <td>{{break.mode}}</td>
+                        <td>{{break.start}}</td>
+                        <td>{{break.end}}</td>
+                        <td>{{break.status}}</td>
+                        <td>{{"{:.2f}".format(break.total_hours) if break.total_hours else '0'}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h6 class="mt-4">Calculation</h6>
+        <table class="table table-bordered">
+            <thead>
+                <th>Total hours</th>
+                <th>Total break</th>
+                <th>Working hours</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{timelog.total_hours}}</td>
+                    <td>{{"{:.2f}".format(break_hours_sum) if break_hours_sum else '0'}}</td>
+                    <td>{{"{:.2f}".format(working_hours) if working_hours else '0'}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h6 class="mt-4">End of day report</h6>
+        <div class="p-3 border">
+            <div class="pb-3" style="white-space: pre-line;">
+                {{- timelog.eod -}}
+            </div>
+        </div>
+
+        <em class="text-light" style="font-size:10px;">{{current_url}}</em>
+
+    </div>
+
+   
+</div>

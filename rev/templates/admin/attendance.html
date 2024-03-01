@@ -1,0 +1,81 @@
+{% if action == 'details' %}
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <form method="post" role="form" hx-post="{{ url_for('admin.ax-attendance-range') }}" hx-target="#attendance-record">
+                <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+                <input type="hidden" name="uid" value="{{user.id}}">
+                From
+                <input type="date" name="date_from" class="pickdate"/>
+                To
+                <input type="date" name="date_to" class="pickdate"/>
+                <button type="submit">filter</button>
+            </form>
+        </div>
+        <div class="col-12 mt-3" id="attendance-record">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>DateTime Added</th>
+                            <th>In</th>
+                            <th>Out</th>
+                            <th>Total Hours</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for att in attendance %}
+                            <tr>
+                                <td>{{att.created_at}}</td>
+                                <td>{{att.checkin}}</td>
+                                <td>{{att.checkout}}</td>
+                                <td>{{att.total_hours}}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% else %}
+
+    <div class="row mb-4">
+        <div class="col">
+            <h4>Attendance</h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{user.id}}</td>
+                            <td>{{user.username}}</td>
+                            <td>{{user.email}}</td>
+                            <td class="text-end">
+                                <button 
+                                    class="btn btn-light border py-0 px-2"
+                                    hx-get="{{url_for('admin.ax-attendance', action='details', id=user.id)}}"
+                                    hx-target="#d-view"
+                                    >show
+                                </button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endif %}

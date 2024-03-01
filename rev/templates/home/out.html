@@ -1,0 +1,35 @@
+{% extends 'layout/main.html' %}
+
+
+{% block content %}
+
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-sm-6">
+                <a class="btn btn-secondary" href="{{url_for('home.action_index')}}">&leftarrow; back to home</a><br/><br/>
+                <h4>Check-Out</h4>
+
+
+                <div class="py-3">
+                    <div class="p-4 border rounded-10 shadow">
+                    <p>
+                        Checked-IN at: <span class="fw-bold">{{checking.checkin}}</span>
+                    </p>
+                    <form method="post" role="form">
+                        {{form.hidden_tag()}}
+                        <div class="pb-3">
+                            {{form.eod.label}}<br/>
+                            {{form.eod(class='form-control', style='min-height:150px;')}}
+                            <span class="text-danger">{{form.eod.errors[0]}}</span>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn btn-primary">Check OUT</button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

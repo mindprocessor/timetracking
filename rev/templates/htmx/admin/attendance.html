@@ -1,0 +1,86 @@
+
+<div id="htmx-attendance">
+    <div class="row">
+        <div class="col">
+            <h4>Attendance</h4>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-12">
+            <form method="post" role="form" 
+                class="d-flex align-items-center"
+                hx-post="{{ url_for('htmx_admin.action_attendance', uid=user.id) }}" 
+                hx-target="#htmx-attendance" hx-swap="outerHTML"
+                hx-indicator=".d-loader">
+                <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+                <input type="hidden" name="uid" value="{{user.id}}">
+                <input type="month" name="month" value="{{month}}"/>
+                <button type="submit" class="btn btn-sm btn-light mx-2 border">filter</button>
+            </form>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col">
+            <div class="table-responsive">
+                {% if attendance %}
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Date Added</th>
+                            <th>In</th>
+                            <th>Out</th>
+                            <th>Total Hours</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for att in attendance %}
+                            <tr>
+                                <td>{{att.created.strftime('%Y-%m-%d')}}</td>
+                                <td>{{att.checkin}}</td>
+                                <td>{{att.checkout}}</td>
+                                <td>{{"{:.2f}".format(att.total_hours) if att.total_hours else '0'}}</td>
+                                <td>
+                                    <button
+                                        target-url="{{url_for('htmx_admin.action_timelog', id=att.id)}}" 
+                                        class="btn btn-sm btn-light border py-0 view-timelog-detail">
+                                        view details
+                                    </button>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <small class="text-muted">{{current_url}}</small>
+                {% else %}
+                    <p>No records found!</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+     <div class="modal" id="modal-timelog-detail" tabindex="-1">
+        <div class="modal-dialog modal-lg" data-bs-backdrop="static">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Timelog Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-timelog-detail-content">
+                <p>Loading content . . .</p>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $('.view-timelog-detail').on('click', function(){
+            target_url = $(this).attr('target-url');
+            $('#modal-timelog-detail-content').html('<p>Loading content . . .</p>');
+            htmx.ajax('GET', target_url, '#modal-timelog-detail-content').then(function(){
+                $('#modal-timelog-detail').modal('show');
+            });
+        });
+    </script>
+</div>

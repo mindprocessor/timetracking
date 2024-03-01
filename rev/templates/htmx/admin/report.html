@@ -1,0 +1,49 @@
+<div id="report-container">
+
+    <form hx-post="{{url_for('htmx_admin.action_report', id=report.id)}}" 
+        hx-swap="outerHTML" hx-target="#report-container" hx-indicator=".d-loader">
+        {{ msg|safe if msg else ''}}
+
+        <p><em>Submitted by:</em> {{report.users.username}}</p>
+
+        {{form.hidden_tag()}}
+
+        <div class="row g-3">
+            <div class="col-12">
+                {{form.title.label}}
+                {{form.title(class='form-control', readonly='true')}}
+                <small class="text-danger">{{form.title.errors[0]}}</small>
+            </div>
+
+            <div class="col-12">
+                {{form.severity.label}}
+                {{form.severity(class='form-control')}}
+                <small class="text-danger">{{form.severity.errors[0]}}</small>
+            </div>
+
+            <div class="col-12">
+                {{form.details.label}}
+                {{form.details(class='form-control', readonly="true")}}
+                <small class="text-danger">{{form.details.errors[0]}}</small>
+            </div>
+
+            <div class="col-12">
+                {{form.remarks.label}}
+                {{form.remarks(class='form-control')}}
+                <small class="text-danger">{{form.remarks.errors[0]}}</small>
+            </div>
+
+            <div class="col-12">
+                {{form.resolved()}}
+                {{form.resolved.label}}
+                <small class="text-danger">{{form.resolved.errors[0]}}</small>
+            </div>
+
+            <div class="col">
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+        </div>
+    
+    </form>
+
+</div>

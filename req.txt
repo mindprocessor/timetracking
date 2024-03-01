@@ -1,0 +1,6 @@
+flask
+flask-wtf
+peewee
+tzdata
+email_validator
+pymysql

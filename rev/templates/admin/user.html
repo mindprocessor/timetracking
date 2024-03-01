@@ -1,0 +1,91 @@
+{% extends 'layout/main_admin.html' %}
+
+
+{% block content %}
+
+    <div class="container py-5" id="d-view">
+        
+        <div class="row">
+            <div class="col">
+                <h4>User / {{user.username}} </h4>
+            </div>
+        </div>
+      
+        <div class="row mt-3">
+            <div class="col">
+             
+                <div class="row g-3">
+                    <div class="col-6">
+                        <div class="p-3 rounded bg-primary bg-opacity-10">
+                            <small>EID</small>
+                            <p class="fs-4 m-0">{{user.eid or '[-]'}}</p>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-3 rounded bg-primary bg-opacity-10">
+                            <small>Username</small>
+                            <p class="fs-4 m-0">{{user.username}}</p>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="p-3 rounded bg-info bg-opacity-10">
+                            <small>Full Name</small>
+                            <p class="fs-4 m-0">{{user.first_name}} {{user.last_name}}</p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="p-3 rounded bg-warning bg-opacity-10">
+                            <small>Account</small>
+                            <p class="fs-4 m-0">{{user.account}}</p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="p-3 rounded bg-dark bg-opacity-10">
+                            <small>Status</small>
+                            <div class="fs-4">
+                                {% if user.status %}
+                                    ACTIVE
+                                {% else %}
+                                    DEACTIVATED
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12 d-flex justify-content-between">
+                        
+                        <div class="btn-group">
+                            <a href="{{url_for('admin.action_user_timelogs', id=uid)}}" 
+                                class="btn btn-sm btn-light border" up-follow>
+                                Timelogs
+                            </a>
+                            <a href="{{url_for('admin.action_user_edit', uid=uid)}}" 
+                                class="btn btn-sm btn-light border" up-follow>
+                                Edit details
+                            </a>
+                            <a href="{{url_for('admin.action_user_change_password', uid=uid)}}"
+                                class="btn btn-light border btn-sm" up-follow>
+                                Change password
+                            </a>
+
+                            {% if user.status %}
+                                <a href="{{url_for('admin.action_user_deactivate', id=user.id)}}" class="btn btn-sm btn-dark" up-follow>Deactivate</a>
+                            {% else %}
+                                <a href="{{url_for('admin.action_user_activate', id=user.id)}}" class="btn btn-sm btn-success" up-follow>Activate</a>
+                            {% endif %}
+                            
+                        </div>
+
+                        <div>
+                            <a href="{{url_for('admin.action_user_delete', id=uid)}}" class="btn btn-danger btn-sm" up-follow>
+                                Delete
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

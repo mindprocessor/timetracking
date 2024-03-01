@@ -1,0 +1,86 @@
+{% extends 'layout/main_admin.html' %}
+
+
+{% block content %}
+
+    <div class="container py-5" id="d-view">
+        
+        <div class="row">
+            <div class="col">
+                <h4>Reports</h4>
+            </div>
+            <div class="col text-end">
+                <div class="btn-group">
+                    <a href="?resolved=no" class="btn btn-sm btn-light border" up-follow>
+                        Unresolved
+                    </a>
+                    <a href="?resolved=yes" class="btn btn-sm btn-light border" up-follow>
+                        Resolved
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col">
+                {% if reports %}
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <th>Severity</th>
+                                <th>Title</th>
+                                <th>Submitted by</th>
+                                <th>Datetime</th>
+                                <th>Status</th>
+                            </thead>
+                            <tbody class="table-group-divider">
+                                {% for report in reports %}
+                                    <tr>
+                                        <td>{{report.severity}}</td>
+                                        <td>
+                                            <a href="{{url_for('admin.action_reports_edit', id=report.id)}}"
+                                                class="btn-select-report fw-bold text-decoration-none"
+                                                up-layer="new" up-size="large" up-on-dismissed="up.reload()">
+                                                {{report.title}}
+                                            </a>
+                                        </td>
+                                        <td>{{report.users.username}}</td>
+                                        <td>{{report.created}}</td>
+                                        <td>
+                                            {% if report.resolved == True %}
+                                                <span class="text-success">resolved</span>
+                                            {% endif %}
+                                            {% if report.resolved == False %}
+                                                <span class="text-danger">unresolved</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p>No records listed</p>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="modal" id="modal-report-detail" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Report Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="selected-report">Loading data...</div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

@@ -1,0 +1,49 @@
+{% extends 'layout/main_admin.html' %}
+
+
+{% block content %}
+
+    <div class="container py-5" id="d-view">
+        <div class="row">
+            <div class="col">
+                <h4>Check-IN Users</h4>
+            </div>
+        </div>
+        <div class="row mt-2 g-3">
+            {% if checkin_users %}
+                <table class="table">
+                    <thead>
+                        <th>Username</th>
+                        <th>First name</th>
+                        <th>Time IN</th>
+                        <th>Break</th>
+                    </thead>
+                    <tbody class="table-group-divider">
+                    {% for item in checkin_users %}
+                        <tr>
+                            <td>
+                                <a href="{{url_for('admin.action_user', uid=item.users.id)}}" 
+                                    class="fw-bold text-decoration-none" up-follow>
+                                    {{item.users.username}}</td>
+                                </a>
+                            <td>{{item.users.first_name}}</td>
+                            <td>{{item.checkin}}</td>
+                            <td>
+                                {% for break in item.breaks %}
+                                    {% if break.status == 'start' %}
+                                        <span class="badge bg-primary">{{break.mode}}</span>
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <div class="col">
+                    <p class="lead">No records found</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock content %}

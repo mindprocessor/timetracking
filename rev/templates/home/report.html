@@ -1,0 +1,43 @@
+{% extends 'layout/main.html' %}
+
+
+{% block content %}
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col">
+            <h3>Report <span class="fs-6">(Incident Report)</span></h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+           <div class="p-4 border rounded bg-dark bg-opacity-10">
+                <form method="post" up-submit up-disable>
+                    <div class="row g-3">
+                        {{form.hidden_tag()}}
+                        <div class="col-12">
+                            {{form.title.label}}
+                            {{form.title(class='form-control')}}
+                            <small class="text-danger">{{form.title.errors[0]}}</small>
+                        </div>
+                        <div class="col-12">
+                            {{form.severity.label}}
+                            {{form.severity(class='form-control')}}
+                            <small class="text-danger">{{form.severity.errors[0]}}</small>
+                        </div>
+                        <div class="col-12">
+                            {{form.details.label}}
+                            {{form.details(class='form-control', style='min-height:250px;')}}
+                            <small class="text-danger">{{form.details.errors[0]}}</small>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary">Submit report</button>
+                        </div>
+                    </div>
+                </form>
+           </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

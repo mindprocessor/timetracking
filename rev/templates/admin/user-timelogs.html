@@ -1,0 +1,67 @@
+{% extends 'layout/main_admin.html' %}
+
+
+{% block content %}
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col">
+            <h4>User / {{user.username}} / Timelogs </h4>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col">
+            <a href="{{url_for('admin.action_user', uid=user.id)}}" class="btn btn-light border" up-follow>
+                &leftarrow; back to user details
+            </a>
+        </div>
+        <div class="col text-end">
+            <form method="get" role="form" up-submit up-disable>
+                <input type="month" name="month" value="{{month}}"/>
+                <button type="submit">filter</button>
+            </form>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col">
+            <div class="table-responsive">
+                {% if attendance %}
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Date Added</th>
+                            <th>In</th>
+                            <th>Out</th>
+                            <th>Total Hours</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for att in attendance %}
+                            <tr>
+                                <td>{{att.created.strftime('%Y-%m-%d')}}</td>
+                                <td>{{att.checkin}}</td>
+                                <td>{{att.checkout}}</td>
+                                <td>{{"{:.2f}".format(att.total_hours) if att.total_hours else '0'}}</td>
+                                <td>
+                                    <a href="{{url_for('admin.action_user_timelog_detail', id=att.id)}}"
+                                        class="btn btn-sm btn-light border py-0 view-timelog-detail"
+                                        up-layer="new" up-size="large">
+                                        view details
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <small class="text-muted">{{current_url}}</small>
+                {% else %}
+                    <p>No records found!</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

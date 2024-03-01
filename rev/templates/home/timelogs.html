@@ -1,0 +1,64 @@
+{% extends 'layout/main.html' %}
+
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col">
+            <h3>Timelogs</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {% if timelogs %}
+                <div class="table-responsive">
+
+                    <table class="table table-hover">
+                        <thead>
+                            <th>IN</th>
+                            <th>OUT</th>
+                            <th>Total Hrs</th>
+                            <th></th>
+                        </thead>
+                        <tbody class="table-group-divider">
+                            {% for item in timelogs %}
+                                <tr>
+                                    <td>{{item.checkin}}</td>
+                                    <td>{{item.checkout}}</td>
+                                    <td>{{item.total_hours}}</td>
+                                    <td class="text-end">
+                                        <a href="{{url_for('home.action_checking_details', id=item.id)}}" 
+                                            class="btn btn-sm btn-light border py-0"
+                                            up-layer="new" up-size="large">
+                                            see details
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <caption>
+                            Total items: {{timelogs_count}}
+                        </caption>
+                    </table>
+
+                    <nav aria-label="page navigation">
+                        <ul class="pagination">
+                            {% for i in range(1, page_number) %}
+                                {% if page == i %}
+                                    {% set is_active = 'active' %}
+                                {% endif %}
+                                <li class="page-item">
+                                    <a class="page-link {{is_active}}" href="?page={{i}}" up-follow>{{i}}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </nav>
+                
+                </div>
+            {% else %}
+                <p class="lead">No results</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
