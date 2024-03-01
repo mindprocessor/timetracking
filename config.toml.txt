@@ -7,4 +7,6 @@ port = 3306
 
 [flask]
 secret_key = "your-secret-key-here"
-session_cookie_secure = False
+session_cookie_secure = "False"
+template_reload = "True"
+

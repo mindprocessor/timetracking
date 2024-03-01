@@ -16,6 +16,9 @@
 ### Installing requirements
 Pip install requirements.txt file
 
+# Creating the config.toml file
+Edit the config.toml.txt file to config.toml file
+
 ### Creating the database
 Replace setting value in config.toml file for you mysql settings
 Run createdb.py
