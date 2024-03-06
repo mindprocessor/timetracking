@@ -20,7 +20,7 @@ Pip install requirements.txt file
 Edit the config.toml.txt file to config.toml file
 
 ## Creating the database
-Replace setting value in config.toml file for you mysql settings
+Replace setting value in config.toml file for your mysql settings
 
 Run createdb.py
 
@@ -29,4 +29,4 @@ Run create_admin.py
 
 This will add a user with username admin and password admin
 
-You can run createdb.py to reset admin password
+You can run create_admin.py to reset admin password
