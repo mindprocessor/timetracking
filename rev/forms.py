@@ -44,8 +44,7 @@ class FormDeleteUser(FlaskForm):
         if confirmation_code.data != self.confirmation_code_hidden.data:
             raise ValidationError('Confirmation Code did not match')
 
-    @staticmethod
-    def validate_password(password):
+    def validate_password(seld, password):
         curr_password = current_user().password
         password_data = do_hash(password.data)
         if curr_password != password_data:
