@@ -20,6 +20,11 @@
                         <h5>User Details</h5>
                         {{form.hidden_tag()}}
                             <div class="py-2">
+                                {{form.employee_id.label}}
+                                {{form.employee_id(class='form-control')}}
+                                <small class="text-danger">{{form.employee_id.errors[0]}}</small>    
+                            </div>
+                            <div class="py-2">
                                 {{form.username.label}}
                                 {{form.username(class='form-control')}}
                                 <small class="text-danger">{{form.username.errors[0]}}</small>    
