@@ -65,6 +65,7 @@ def action_user_add():
         else:
             try:
                 Users.create(
+                    eid=form.employee_id.data,
                     username=username,
                     first_name=form.first_name.data,
                     last_name=form.last_name.data,
